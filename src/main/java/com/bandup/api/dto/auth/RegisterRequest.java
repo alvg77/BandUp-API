@@ -19,8 +19,6 @@ public class RegisterRequest {
     @NonNull
     private String password;
     @NonNull
-    private String displayName;
-    @NonNull
     private Long artistTypeId;
     @NonNull
     private Set<Long> genreIds;

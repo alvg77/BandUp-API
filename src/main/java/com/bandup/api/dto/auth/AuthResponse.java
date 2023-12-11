@@ -11,12 +11,4 @@ import java.util.Set;
 @Data
 public class AuthResponse {
     private String token;
-    private String displayName;
-    private String bio;
-    private ArtistTypeDTO artistType;
-    private String email;
-    private String username;
-    private UserLocationDTO location;
-    private Set<GenreDTO> genres;
-    private String id;
 }

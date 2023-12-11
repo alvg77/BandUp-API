@@ -15,6 +15,4 @@ public interface AuthMapper {
     @Mapping(target = "communityPosts", ignore = true)
     @Mapping(target = "artistType.id", source = "artistTypeId")
     User fromRegisterRequestResource(RegisterRequest request);
-
-    AuthResponse toAuthResponseResource(User user);
 }

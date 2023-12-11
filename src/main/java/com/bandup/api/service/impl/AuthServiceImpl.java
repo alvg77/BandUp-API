@@ -55,7 +55,7 @@ public class AuthServiceImpl implements AuthService {
         }
 
         String jwtToken = jwtService.generateToken(user);
-        AuthResponse authResponse = AuthMapper.MAPPER.toAuthResponseResource(userRepository.save(user));
+        AuthResponse authResponse = new AuthResponse();
         authResponse.setToken(jwtToken);
 
         return authResponse;
@@ -75,13 +75,13 @@ public class AuthServiceImpl implements AuthService {
 
         String jwtToken = jwtService.generateToken(user);
 
-        AuthResponse authResponse;
         try {
-            authResponse = AuthMapper.MAPPER.toAuthResponseResource(userRepository.save(user));
+            userRepository.save(user);
         } catch (DataIntegrityViolationException e) {
             throw new EntityExistsException("User with such username/email already exists!");
         }
 
+        AuthResponse authResponse = new AuthResponse();
         authResponse.setToken(jwtToken);
         return authResponse;
     }
