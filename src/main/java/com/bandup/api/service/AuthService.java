@@ -8,5 +8,7 @@ import com.bandup.api.entity.User;
 public interface AuthService {
     AuthResponse login(LoginRequest loginRequest);
     AuthResponse register(RegisterRequest registerRequest);
+    void emailAvailability(String email);
+    void usernameAvailability(String username);
     User getCurrentUser();
 }

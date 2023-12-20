@@ -16,6 +16,6 @@ public class UserLocation {
     private Long id;
     private String country;
     private String city;
-    private Integer postalCode;
+    private String postalCode;
 }
 

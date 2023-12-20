@@ -10,5 +10,5 @@ public class UserLocationDTO {
     @NonNull
     private String city;
     @NonNull
-    private Integer postalCode;
+    private String postalCode;
 }

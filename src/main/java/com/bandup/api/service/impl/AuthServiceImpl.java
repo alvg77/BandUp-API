@@ -87,6 +87,20 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    public void emailAvailability(String email) {
+        if (userRepository.findByEmail(email).isPresent()) {
+            throw new EntityExistsException("Email is already in use.");
+        }
+    }
+
+    @Override
+    public void usernameAvailability(String username) {
+        if (userRepository.findByUsername(username).isPresent()) {
+            throw new EntityExistsException("Username is already in use.");
+        }
+    }
+
+    @Override
     public User getCurrentUser() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
