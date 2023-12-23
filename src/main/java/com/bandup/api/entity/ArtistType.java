@@ -1,6 +1,5 @@
 package com.bandup.api.entity;
 
-import com.bandup.api.util.enumerations.ArtistTypeEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,7 +11,5 @@ import lombok.*;
 public class ArtistType {
     @Id
     private Long id;
-
-    @Enumerated(EnumType.STRING)
-    private ArtistTypeEnum name;
+    private String name;
 }
