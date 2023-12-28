@@ -26,7 +26,6 @@ import java.util.Set;
         indexes = {
                 @Index(name = "user_username_index", columnList = "username"),
                 @Index(name = "user_email_index", columnList = "email"),
-                @Index(name = "user_display_name_index", columnList = "displayName"),
         }
 )
 public class User implements UserDetails {
@@ -37,16 +36,12 @@ public class User implements UserDetails {
     private String username;
     private String email;
     private String password;
-    @Column(length = 50)
-    private String displayName;
     @Nullable
     private String bio;
     @Nullable
     private String profilePicture;
     @Nullable
     private String profileBanner;
-    @Nullable
-    private Integer yearsPlaying;
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createdAt = new Timestamp(System.currentTimeMillis());
 
