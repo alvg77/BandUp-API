@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +19,10 @@ public class UserServiceImpl implements UserService {
     private final AuthService authService;
 
     @Override
-    public List<UserDTO> getAllUsers() {
+    public List<UserDTO> getAllUsers(Optional<String> username) {
+        if (username.isPresent()) {
+            return UserMapper.MAPPER.toUserDTOs(userRepository.searchBy(username.get(), 10, "username"));
+        }
         return UserMapper.MAPPER.toUserDTOs(userRepository.findAll());
     }
 
@@ -30,11 +34,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO getCurrentUser() {
         return UserMapper.MAPPER.toUserDTO(userRepository.findById(authService.getCurrentUser().getId()).orElseThrow());
-    }
-
-    @Override
-    public List<UserDTO> getUsersByUsername(String username) {
-        return null;
     }
 
     @Override

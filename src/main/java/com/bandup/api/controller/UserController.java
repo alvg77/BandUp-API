@@ -4,8 +4,11 @@ import com.bandup.api.dto.user.UserDTO;
 import com.bandup.api.service.AuthService;
 import com.bandup.api.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -15,13 +18,18 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public ResponseEntity<?> getAll() {
-        return ResponseEntity.ok(userService.getAllUsers());
+    public ResponseEntity<?> getAll(@RequestParam(value = "username", required = false) Optional<String> username) {
+        return ResponseEntity.ok(userService.getAllUsers(username));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable long id) {
         return ResponseEntity.ok(userService.getUserById(id));
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<?> getMe() {
+        return ResponseEntity.ok(userService.getCurrentUser());
     }
 
     @PutMapping
