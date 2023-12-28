@@ -16,7 +16,10 @@ public interface AdvertisementMapper {
     @Mapping(target = "genres", ignore = true)
     @Mapping(target = "searched", ignore = true)
     Advertisement advertisementRequestToAdvertisement(AdvertisementRequest request);
-    @Mapping(target = "creatorId", source = "user.id")
+
+    @Mapping(target = "creator.id", source = "advertisement.user.id")
+    @Mapping(target = "creator.username", source = "advertisement.user.username")
+    @Mapping(target = "creator.profilePicture", source = "advertisement.user.profilePicture")
     AdvertisementResponse advertisementToAdvertisementResponse(Advertisement advertisement);
 
     List<AdvertisementResponse> advertisementsToAdvertisementResponses(List<Advertisement> advertisements);

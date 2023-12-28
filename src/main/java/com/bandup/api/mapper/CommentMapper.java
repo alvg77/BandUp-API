@@ -19,8 +19,10 @@ public interface CommentMapper {
     @Mapping(target = "communityPost.id", source = "postId")
     Comment fromCommentRequestResource(CommentRequest request);
 
-    @Mapping(target = "creatorId", source = "user.id")
     @Mapping(target = "postId", source = "communityPost.id")
+    @Mapping(target = "creator.id", source = "comment.user.id")
+    @Mapping(target = "creator.username", source = "comment.user.username")
+    @Mapping(target = "creator.profilePicture", source = "comment.user.profilePicture")
     CommentResponse toCommentResponseResource(Comment comment);
 
     List<CommentResponse> toCommentResponses(List<Comment> commentList);

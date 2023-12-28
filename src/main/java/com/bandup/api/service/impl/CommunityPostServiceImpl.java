@@ -60,7 +60,7 @@ public class CommunityPostServiceImpl implements CommunityPostService {
 
         communityPost.setTitle(request.getTitle());
         communityPost.setContent(request.getContent());
-        communityPost.setStaticMediaKey(request.getStaticMediaKey());
+        communityPost.setUrl(request.getUrl());
         communityPost.setFlair(postFlairRepository.findById(request.getFlairId()).orElseThrow(
                 () -> new RuntimeException("Flair not found")
         ));
