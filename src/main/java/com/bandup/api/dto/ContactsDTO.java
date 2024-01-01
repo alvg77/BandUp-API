@@ -6,6 +6,6 @@ import lombok.Data;
 public class ContactsDTO {
     private Long id;
     private String phoneNumber;
-    private String email;
+    private String contactEmail;
     private String website;
 }

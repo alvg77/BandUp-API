@@ -21,9 +21,6 @@ public interface UserMapper {
     @Mapping(target = "id", source = "user.id")
     UserDTO toUserDTO(User user);
 
-    @Mapping(target = "id", source = "user.id")
-    @Mapping(target = "username", source = "user.username")
-    @Mapping(target = "profilePicture", source = "user.profilePicture")
     UserDetailResponse toUserDetailResponse(User user);
 
     @Mapping(target = "id", source = "user.id")

@@ -21,10 +21,8 @@ public interface CommunityPostMapper {
     @Mapping(target = "flair.id", ignore = true)
     CommunityPost fromCommunityPostRequest(CommunityPostRequest request);
 
-    @Mapping(target = "creator.id", source = "communityPost.user.id")
-    @Mapping(target = "creator.username", source = "communityPost.user.username")
-    @Mapping(target = "creator.profilePicture", source = "communityPost.user.profilePicture")
     @Mapping(target = "commentCount", expression = "java((long) communityPost.getComments().size())")
+    @Mapping(target = "creator.id", source = "communityPost.user.id")
     CommunityPostResponse toCommunityPostResponse(CommunityPost communityPost);
 
     List<CommunityPostResponse> toCommunityPostResponses(List<CommunityPost> communityPostList);

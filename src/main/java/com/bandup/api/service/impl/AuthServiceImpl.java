@@ -66,7 +66,6 @@ public class AuthServiceImpl implements AuthService {
         User user = AuthMapper.MAPPER.fromRegisterRequestResource(registerRequest);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setCreatedAt(new Timestamp(new Date().getTime()));
         user.setArtistType(
                 artistTypeRepository.findById(registerRequest.getArtistTypeId())
                 .orElseThrow(() -> new EntityExistsException("Artist type with such id does not exist!"))
@@ -78,6 +77,8 @@ public class AuthServiceImpl implements AuthService {
         try {
             userRepository.save(user);
         } catch (DataIntegrityViolationException e) {
+            System.out.println(user.getContacts().getContactEmail());
+            System.out.println(e.getMessage());
             throw new EntityExistsException("User with such username/email already exists!");
         }
 

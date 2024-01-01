@@ -7,8 +7,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
-public interface UserLocationMapper{
-    UserLocationMapper MAPPER = Mappers.getMapper(UserLocationMapper.class);
+public interface LocationMapper {
+    LocationMapper MAPPER = Mappers.getMapper(LocationMapper.class);
 
     @Mapping(target = "id", ignore = true)
     Location fromRegisterRequestResource(LocationDTO request);

@@ -12,6 +12,7 @@ public interface AuthMapper {
     AuthMapper MAPPER = Mappers.getMapper(AuthMapper.class);
 
     @Mapping(target = "location.id", ignore = true)
+    @Mapping(target = "contacts.id", ignore = true)
     @Mapping(target = "communityPosts", ignore = true)
     @Mapping(target = "artistType.id", source = "artistTypeId")
     User fromRegisterRequestResource(RegisterRequest request);

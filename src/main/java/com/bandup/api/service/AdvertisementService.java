@@ -9,8 +9,9 @@ import java.util.List;
 
 public interface AdvertisementService {
     List<AdvertisementResponse> findAll(
-            String search,
-            LocationDTO location,
+            String postalCode,
+            String city,
+            String country,
             Long[] genreIds,
             Long[] artistTypeIds,
             Long userId

@@ -32,25 +32,35 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(length = 50)
     private String username;
+
     private String email;
+
     private String password;
+
     @Nullable
     private String bio;
+
     @Nullable
     private String profilePicture;
+
     @Nullable
     private String profileBanner;
+
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createdAt = new Timestamp(System.currentTimeMillis());
 
-    // --------------------------------- RELATIONSHIPS ---------------------------------
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_media_id", referencedColumnName = "id")
+    private List<Media> media;
+
+    @OneToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "`user_contacts_id`", referencedColumnName = "`id`")
     private Contacts contacts;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "`user_location_id`", referencedColumnName = "`id`")
     private Location location;
 
@@ -58,13 +68,13 @@ public class User implements UserDetails {
     @JoinColumn(name = "`artist_type_id`", referencedColumnName = "`id`")
     private ArtistType artistType;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private List<CommunityPost> communityPosts = List.of();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Advertisement> advertisements = List.of();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private List<Comment> comments = List.of();
 
     @ManyToMany
@@ -74,10 +84,6 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
     private Set<Genre> genres = Set.of();
-
-    @ElementCollection
-    @CollectionTable(name = "user_social_media", joinColumns = @JoinColumn(name = "user_id"))
-    private Set<String> socialMedia = Set.of();
 
     // --------------------------------- AUTHENTICATION METHODS ---------------------------------
     @Override

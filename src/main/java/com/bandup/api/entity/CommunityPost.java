@@ -34,7 +34,7 @@ public class CommunityPost {
     @JoinColumn(name = "post_flair_id", referencedColumnName = "id")
     private PostFlair flair;
 
-    @OneToMany(mappedBy = "communityPost")
+    @OneToMany(mappedBy = "communityPost", cascade = CascadeType.REMOVE)
     private List<Comment> comments = List.of();
 
     @ManyToOne(optional = false)

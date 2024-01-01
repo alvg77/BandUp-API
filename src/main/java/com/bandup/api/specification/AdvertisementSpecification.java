@@ -1,8 +1,8 @@
 package com.bandup.api.specification;
 
-import com.bandup.api.dto.LocationDTO;
 import com.bandup.api.entity.Advertisement;
 import com.bandup.api.entity.Genre;
+import com.bandup.api.entity.Location;
 import com.bandup.api.entity.User;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Path;
@@ -12,37 +12,20 @@ import org.springframework.data.jpa.domain.Specification;
 public class AdvertisementSpecification {
     private AdvertisementSpecification() {}
 
-    public static Specification<Advertisement> search(String search) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("title"), "%" + search + "%");
+    public static Specification<Advertisement> hasPostalCodeEqual(String postalCode, String city, String country) {
+        return (root, query, criteriaBuilder) -> {
+            Path<Location> location = root.get("location");
+
+            Predicate postalCodePredicate = criteriaBuilder.equal(location.get("postalCode"), postalCode);
+            Predicate cityPredicate = criteriaBuilder.equal(location.get("city"), city);
+            Predicate countryPredicate = criteriaBuilder.equal(location.get("country"), country);
+
+            return criteriaBuilder.and(postalCodePredicate, cityPredicate, countryPredicate);
+        };
     }
 
-    public static Specification<Advertisement> hasLocation(LocationDTO location) {
-        return (root, query, criteriaBuilder) -> {
-            Predicate predicate = criteriaBuilder.conjunction();
-
-            if (location.getPostalCode() != null && !location.getPostalCode().isEmpty()) {
-                predicate = criteriaBuilder.and(
-                        predicate,
-                        criteriaBuilder.equal(root.get("location").get("postalCode"), location.getPostalCode())
-                );
-            }
-
-            if (location.getCity() != null && !location.getCity().isEmpty()) {
-                predicate = criteriaBuilder.and(
-                        predicate,
-                        criteriaBuilder.equal(root.get("location").get("city"), location.getCity())
-                );
-            }
-
-            if (location.getCountry() != null && !location.getCountry().isEmpty()) {
-                predicate = criteriaBuilder.and(
-                        predicate,
-                        criteriaBuilder.equal(root.get("location").get("country"), location.getCountry())
-                );
-            }
-
-            return predicate;
-        };
+    public static Specification<Advertisement> hasCountryEqual(String country) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("country"), country);
     }
 
     public static Specification<Advertisement> hasUserIdEqual(Long userId) {

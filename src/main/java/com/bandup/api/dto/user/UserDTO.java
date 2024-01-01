@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 @Builder
@@ -19,6 +20,6 @@ public class UserDTO {
     private String bio;
     private LocationDTO location;
     private ContactsDTO contacts;
-    private MediaDTO media;
+    private List<MediaDTO> media;
     private Timestamp createdAt;
 }

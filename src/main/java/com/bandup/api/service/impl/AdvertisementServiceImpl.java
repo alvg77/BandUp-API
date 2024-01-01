@@ -1,9 +1,10 @@
 package com.bandup.api.service.impl;
 
-import com.bandup.api.dto.LocationDTO;
 import com.bandup.api.dto.advertisement.AdvertisementRequest;
 import com.bandup.api.dto.advertisement.AdvertisementResponse;
 import com.bandup.api.entity.Advertisement;
+import com.bandup.api.entity.Location;
+import com.bandup.api.entity.User;
 import com.bandup.api.mapper.AdvertisementMapper;
 import com.bandup.api.repository.AdvertisementRepository;
 import com.bandup.api.repository.ArtistTypeRepository;
@@ -27,8 +28,9 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     @Override
     public List<AdvertisementResponse> findAll(
-            String search,
-            LocationDTO location,
+            String postalCode,
+            String city,
+            String country,
             Long[] genreIds,
             Long[] artistTypeIds,
             Long userId
@@ -36,9 +38,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         return AdvertisementMapper.MAPPER.advertisementsToAdvertisementResponses(
                 advertisementRepository.findAll(
                         Specification.where(
-                                search != null ? AdvertisementSpecification.search(search) : null
-                        ).and(
-                                location != null ? AdvertisementSpecification.hasLocation(location) : null
+                                postalCode != null && city != null && country != null ? AdvertisementSpecification.hasPostalCodeEqual(postalCode, city, country) : null
                         ).and(
                                 genreIds != null ? AdvertisementSpecification.hasGenreIdsIn(genreIds) : null
                         ).and(
@@ -68,7 +68,11 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         advertisement.setViewCount(0L);
         advertisement.setGenres(genreRepository.getGenresByIdIsIn(request.getGenreIds()));
         advertisement.setSearched(artistTypeRepository.getArtistTypesByIdIsIn(request.getSearchedArtistTypeIds()));
-        advertisement.setUser(authService.getCurrentUser());
+
+        User user = authService.getCurrentUser();
+
+        advertisement.setUser(user);
+        advertisement.setLocation(user.getLocation());
 
         return AdvertisementMapper.MAPPER.advertisementToAdvertisementResponse(
                 advertisementRepository.save(advertisement)
