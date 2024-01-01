@@ -8,7 +8,9 @@ import com.bandup.api.repository.CommunityPostRepository;
 import com.bandup.api.repository.PostFlairRepository;
 import com.bandup.api.service.AuthService;
 import com.bandup.api.service.CommunityPostService;
+import com.bandup.api.specification.CommunityPostSpecification;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -23,8 +25,22 @@ public class CommunityPostServiceImpl implements CommunityPostService {
     private final PostFlairRepository postFlairRepository;
 
     @Override
-    public List<CommunityPostResponse> findAll() {
-        return CommunityPostMapper.MAPPER.toCommunityPostResponses(communityPostRepository.findAll());
+    public List<CommunityPostResponse> findAll(
+            String search,
+            Long flairId,
+            Long userId
+    ) {
+        return CommunityPostMapper.MAPPER.toCommunityPostResponses(
+            communityPostRepository.findAll(
+                Specification.where(
+                        search != null ? CommunityPostSpecification.search(search) : null
+                ).and(
+                        flairId != null ? CommunityPostSpecification.hasFlairIdEqual(flairId) : null
+                ).and(
+                        userId != null ? CommunityPostSpecification.hasUserIdEqual(userId) : null
+                )
+            )
+        );
     }
 
     @Override

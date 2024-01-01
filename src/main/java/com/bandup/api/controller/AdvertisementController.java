@@ -1,5 +1,6 @@
 package com.bandup.api.controller;
 
+import com.bandup.api.dto.LocationDTO;
 import com.bandup.api.dto.advertisement.AdvertisementRequest;
 import com.bandup.api.dto.advertisement.AdvertisementResponse;
 import com.bandup.api.service.AdvertisementService;
@@ -16,8 +17,14 @@ public class AdvertisementController {
     private final AdvertisementService advertisementService;
 
     @GetMapping
-    public ResponseEntity<List<AdvertisementResponse>> getAll() {
-        return ResponseEntity.ok(advertisementService.findAll());
+    public ResponseEntity<List<AdvertisementResponse>> getAll(
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) LocationDTO location,
+            @RequestParam(required = false) Long[] artistTypeIds,
+            @RequestParam(required = false) Long[] genreIds,
+            @RequestParam(required = false) Long userId
+    ) {
+        return ResponseEntity.ok(advertisementService.findAll(search, location, genreIds, artistTypeIds, userId));
     }
 
     @GetMapping("{id}")

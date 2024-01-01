@@ -1,7 +1,7 @@
 package com.bandup.api.mapper;
 
-import com.bandup.api.dto.UserLocationDTO;
-import com.bandup.api.entity.UserLocation;
+import com.bandup.api.dto.LocationDTO;
+import com.bandup.api.entity.Location;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -11,6 +11,6 @@ public interface UserLocationMapper{
     UserLocationMapper MAPPER = Mappers.getMapper(UserLocationMapper.class);
 
     @Mapping(target = "id", ignore = true)
-    UserLocation fromRegisterRequestResource(UserLocationDTO request);
-    UserLocationDTO toAuthResponseResource(UserLocation user);
+    Location fromRegisterRequestResource(LocationDTO request);
+    LocationDTO toAuthResponseResource(Location user);
 }

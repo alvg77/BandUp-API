@@ -15,6 +15,7 @@ public interface UserMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "location.id", ignore = true)
+    @Mapping(target = "contacts.id", ignore = true)
     User fromUserDTO(UserDTO userDTO);
 
     @Mapping(target = "id", source = "user.id")

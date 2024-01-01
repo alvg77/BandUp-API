@@ -1,10 +1,6 @@
 package com.bandup.api.dto.auth;
 
-import com.bandup.api.dto.ArtistTypeDTO;
-import com.bandup.api.dto.GenreDTO;
-import com.bandup.api.dto.UserLocationDTO;
-import com.bandup.api.entity.Genre;
-import lombok.Builder;
+import com.bandup.api.dto.LocationDTO;
 import lombok.Data;
 import lombok.NonNull;
 
@@ -24,5 +20,5 @@ public class RegisterRequest {
     private Set<Long> genreIds;
     private String bio;
     @NonNull
-    private UserLocationDTO location;
+    private LocationDTO location;
 }

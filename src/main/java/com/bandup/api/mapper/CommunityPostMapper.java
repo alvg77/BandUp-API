@@ -14,11 +14,18 @@ import java.util.List;
 public interface CommunityPostMapper {
     CommunityPostMapper MAPPER = Mappers.getMapper(CommunityPostMapper.class);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "user", ignore = true)
+    @Mapping(target = "comments", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "flair.id", ignore = true)
     CommunityPost fromCommunityPostRequest(CommunityPostRequest request);
 
     @Mapping(target = "creator.id", source = "communityPost.user.id")
     @Mapping(target = "creator.username", source = "communityPost.user.username")
     @Mapping(target = "creator.profilePicture", source = "communityPost.user.profilePicture")
+    @Mapping(target = "commentCount", expression = "java((long) communityPost.getComments().size())")
     CommunityPostResponse toCommunityPostResponse(CommunityPost communityPost);
+
     List<CommunityPostResponse> toCommunityPostResponses(List<CommunityPost> communityPostList);
 }

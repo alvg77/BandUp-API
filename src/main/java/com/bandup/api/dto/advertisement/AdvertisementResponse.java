@@ -2,6 +2,7 @@ package com.bandup.api.dto.advertisement;
 
 import com.bandup.api.dto.ArtistTypeDTO;
 import com.bandup.api.dto.GenreDTO;
+import com.bandup.api.dto.LocationDTO;
 import com.bandup.api.dto.user.UserDetailResponse;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +17,7 @@ public class AdvertisementResponse {
     private String description;
     private Set<GenreDTO> genres;
     private Set<ArtistTypeDTO> searched;
+    private LocationDTO location;
     private Long viewCount;
     private UserDetailResponse creator;
 }

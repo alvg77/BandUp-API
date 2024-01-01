@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NonNull;
 
 @Data
-public class UserLocationDTO {
+public class LocationDTO {
     @NonNull
     private String country;
     @NonNull

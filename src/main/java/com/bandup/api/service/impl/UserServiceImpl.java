@@ -19,14 +19,6 @@ public class UserServiceImpl implements UserService {
     private final AuthService authService;
 
     @Override
-    public List<UserDTO> getAllUsers(Optional<String> username) {
-        if (username.isPresent()) {
-            return UserMapper.MAPPER.toUserDTOs(userRepository.searchBy(username.get(), 10, "username"));
-        }
-        return UserMapper.MAPPER.toUserDTOs(userRepository.findAll());
-    }
-
-    @Override
     public UserDTO getUserById(Long id) {
         return UserMapper.MAPPER.toUserDTO(userRepository.findById(id).orElseThrow());
     }

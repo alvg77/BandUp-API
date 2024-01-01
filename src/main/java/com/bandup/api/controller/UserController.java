@@ -14,13 +14,7 @@ import java.util.Optional;
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 public class UserController {
-    private final AuthService authService;
     private final UserService userService;
-
-    @GetMapping
-    public ResponseEntity<?> getAll(@RequestParam(value = "username", required = false) Optional<String> username) {
-        return ResponseEntity.ok(userService.getAllUsers(username));
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable long id) {

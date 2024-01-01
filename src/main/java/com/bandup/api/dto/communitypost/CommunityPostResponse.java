@@ -19,5 +19,6 @@ public class CommunityPostResponse {
     private String content;
     private PostFlairDTO flair;
     private UserDetailResponse creator;
+    private Long commentCount;
     private Timestamp createdAt;
 }

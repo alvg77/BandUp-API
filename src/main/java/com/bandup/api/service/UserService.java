@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    public List<UserDTO> getAllUsers(Optional<String> username);
     public UserDTO getUserById(Long id);
     public UserDTO getCurrentUser();
     public UserDTO updateUser(UserDTO user);

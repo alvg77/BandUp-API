@@ -1,5 +1,6 @@
 package com.bandup.api.controller;
 
+import com.bandup.api.dto.LocationDTO;
 import com.bandup.api.dto.communitypost.CommunityPostRequest;
 import com.bandup.api.dto.communitypost.CommunityPostResponse;
 import com.bandup.api.service.CommunityPostService;
@@ -16,8 +17,12 @@ public class CommunityPostController {
 
     private final CommunityPostService communityPostService;
     @GetMapping
-    public ResponseEntity<List<CommunityPostResponse>> getAll() {
-        return ResponseEntity.ok(communityPostService.findAll());
+    public ResponseEntity<List<CommunityPostResponse>> getAll(
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) Long flairId,
+            @RequestParam(required = false) Long userId
+    ) {
+        return ResponseEntity.ok(communityPostService.findAll(search, flairId, userId));
     }
 
     @GetMapping("/{id}")

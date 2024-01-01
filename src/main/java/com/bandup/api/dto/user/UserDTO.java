@@ -1,9 +1,10 @@
 package com.bandup.api.dto.user;
 
-import com.bandup.api.dto.UserLocationDTO;
+import com.bandup.api.dto.ContactsDTO;
+import com.bandup.api.dto.LocationDTO;
+import com.bandup.api.dto.MediaDTO;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NonNull;
 
 import java.sql.Timestamp;
 
@@ -16,6 +17,8 @@ public class UserDTO {
     private String profilePicture;
     private String profileBanner;
     private String bio;
-    private UserLocationDTO location;
+    private LocationDTO location;
+    private ContactsDTO contacts;
+    private MediaDTO media;
     private Timestamp createdAt;
 }
