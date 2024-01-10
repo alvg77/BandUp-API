@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface CommunityPostService {
     List<CommunityPostResponse> findAll(
+            Integer pageNo,
+            Integer pageSize,
             String search,
             Long flairId,
             Long userId
@@ -14,5 +16,7 @@ public interface CommunityPostService {
     CommunityPostResponse findById(Long id);
     CommunityPostResponse create(CommunityPostRequest request);
     CommunityPostResponse update(Long id, CommunityPostRequest request);
+    void likePost(Long id);
+    void dislikePost(Long id);
     void deleteById(Long id);
 }

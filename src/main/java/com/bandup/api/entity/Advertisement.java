@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,10 +28,6 @@ public class  Advertisement {
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createdAt = new Timestamp(System.currentTimeMillis());
 
-    @OneToOne
-    @JoinColumn(name = "`advertisement_location_id`", referencedColumnName = "`id`")
-    private Location location;
-
     @ManyToMany
     @JoinTable(
             name = "advertisement_genre",
@@ -45,7 +42,7 @@ public class  Advertisement {
             joinColumns = @JoinColumn(name = "advertisement_id"),
             inverseJoinColumns = @JoinColumn(name = "instrument_id")
     )
-    private Set<ArtistType> searched = Set.of();
+    private Set<ArtistType> searchedArtistTypes = Set.of();
 
     @ManyToOne
     private User user;

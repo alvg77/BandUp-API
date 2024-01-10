@@ -3,9 +3,10 @@ package com.bandup.api.service.impl;
 import com.bandup.api.dto.advertisement.AdvertisementRequest;
 import com.bandup.api.dto.advertisement.AdvertisementResponse;
 import com.bandup.api.entity.Advertisement;
-import com.bandup.api.entity.Location;
 import com.bandup.api.entity.User;
 import com.bandup.api.mapper.AdvertisementMapper;
+import com.bandup.api.mapper.ContactsMapper;
+import com.bandup.api.mapper.LocationMapper;
 import com.bandup.api.repository.AdvertisementRepository;
 import com.bandup.api.repository.ArtistTypeRepository;
 import com.bandup.api.repository.GenreRepository;
@@ -13,6 +14,7 @@ import com.bandup.api.service.AdvertisementService;
 import com.bandup.api.service.AuthService;
 import com.bandup.api.specification.AdvertisementSpecification;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,8 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     @Override
     public List<AdvertisementResponse> findAll(
+            Integer pageNo,
+            Integer pageSize,
             String postalCode,
             String city,
             String country,
@@ -35,52 +39,71 @@ public class AdvertisementServiceImpl implements AdvertisementService {
             Long[] artistTypeIds,
             Long userId
     ) {
-        return AdvertisementMapper.MAPPER.advertisementsToAdvertisementResponses(
-                advertisementRepository.findAll(
-                        Specification.where(
-                                postalCode != null && city != null && country != null ? AdvertisementSpecification.hasPostalCodeEqual(postalCode, city, country) : null
-                        ).and(
-                                genreIds != null ? AdvertisementSpecification.hasGenreIdsIn(genreIds) : null
-                        ).and(
-                                artistTypeIds != null ? AdvertisementSpecification.hasArtistTypeIdsIn(artistTypeIds) : null
-                        ).and(
-                                userId != null ? AdvertisementSpecification.hasUserIdEqual(userId) : null
-                        )
-                )
+        User user = authService.getCurrentUser();
+
+        Specification spec = Specification.where(
+                        postalCode != null && city != null && country != null ? AdvertisementSpecification.hasPostalCodeEqual(postalCode, city, country) : null
+                ).and(
+                        genreIds != null ? AdvertisementSpecification.hasGenreIdsIn(genreIds) : null
+                ).and(
+                        artistTypeIds != null ? AdvertisementSpecification.hasArtistTypeIdsIn(artistTypeIds) : null
+                ).and(
+                        userId != null ? AdvertisementSpecification.hasUserIdEqual(userId) : null
+                );
+
+        List<AdvertisementResponse> advertisementResponses = AdvertisementMapper.MAPPER.advertisementsToAdvertisementResponses(
+                advertisementRepository.findAll(spec, PageRequest.of(0, 10)).getContent()
         );
+
+        advertisementResponses.forEach(advertisementResponse -> {
+            advertisementResponse.setLocation(LocationMapper.MAPPER.toLocationDTO(user.getLocation()));
+            advertisementResponse.setContacts(ContactsMapper.MAPPER.toContactsDTO(user.getContacts()));
+        });
+
+        return advertisementResponses;
     }
 
     @Override
     public AdvertisementResponse findById(Long id) {
+        User user = authService.getCurrentUser();
         Advertisement advertisement = advertisementRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("Advertisement not found")
         );
+
         advertisement.setViewCount(advertisement.getViewCount() + 1);
-        return AdvertisementMapper.MAPPER.advertisementToAdvertisementResponse(
+        AdvertisementResponse response = AdvertisementMapper.MAPPER.advertisementToAdvertisementResponse(
                 advertisementRepository.save(advertisement)
         );
+
+        response.setLocation(LocationMapper.MAPPER.toLocationDTO(user.getLocation()));
+        response.setContacts(ContactsMapper.MAPPER.toContactsDTO(user.getContacts()));
+
+        return response;
     }
 
     @Override
     public AdvertisementResponse create(AdvertisementRequest request) {
+        User user = authService.getCurrentUser();
         Advertisement advertisement = AdvertisementMapper.MAPPER.advertisementRequestToAdvertisement(request);
 
         advertisement.setViewCount(0L);
         advertisement.setGenres(genreRepository.getGenresByIdIsIn(request.getGenreIds()));
-        advertisement.setSearched(artistTypeRepository.getArtistTypesByIdIsIn(request.getSearchedArtistTypeIds()));
-
-        User user = authService.getCurrentUser();
-
+        advertisement.setSearchedArtistTypes(artistTypeRepository.getArtistTypesByIdIsIn(request.getSearchedArtistTypeIds()));
         advertisement.setUser(user);
-        advertisement.setLocation(user.getLocation());
 
-        return AdvertisementMapper.MAPPER.advertisementToAdvertisementResponse(
+        AdvertisementResponse response = AdvertisementMapper.MAPPER.advertisementToAdvertisementResponse(
                 advertisementRepository.save(advertisement)
         );
+
+        response.setLocation(LocationMapper.MAPPER.toLocationDTO(user.getLocation()));
+        response.setContacts(ContactsMapper.MAPPER.toContactsDTO(user.getContacts()));
+
+        return response;
     }
 
     @Override
     public AdvertisementResponse update(Long id, AdvertisementRequest request) {
+        User user = authService.getCurrentUser();
         Advertisement advertisement = advertisementRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("Advertisement not found")
         );
@@ -88,11 +111,16 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         advertisement.setTitle(request.getTitle());
         advertisement.setDescription(request.getDescription());
         advertisement.setGenres(genreRepository.getGenresByIdIsIn(request.getGenreIds()));
-        advertisement.setSearched(artistTypeRepository.getArtistTypesByIdIsIn(request.getSearchedArtistTypeIds()));
+        advertisement.setSearchedArtistTypes(artistTypeRepository.getArtistTypesByIdIsIn(request.getSearchedArtistTypeIds()));
 
-        return AdvertisementMapper.MAPPER.advertisementToAdvertisementResponse(
+        AdvertisementResponse response = AdvertisementMapper.MAPPER.advertisementToAdvertisementResponse(
                 advertisementRepository.save(advertisement)
         );
+
+        response.setLocation(LocationMapper.MAPPER.toLocationDTO(user.getLocation()));
+        response.setContacts(ContactsMapper.MAPPER.toContactsDTO(user.getContacts()));
+
+        return response;
     }
 
     @Override

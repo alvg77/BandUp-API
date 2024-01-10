@@ -10,16 +10,12 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper
+@Mapper(uses = {UserMapper.class, GenreMapper.class, ArtistTypeMapper.class})
 public interface AdvertisementMapper {
     AdvertisementMapper MAPPER = Mappers.getMapper(AdvertisementMapper.class);
 
-    @Mapping(target = "genres", ignore = true)
-    @Mapping(target = "searched", ignore = true)
     Advertisement advertisementRequestToAdvertisement(AdvertisementRequest request);
-
-    @Mapping(target = "creator.id", source = "advertisement.user.id")
+    @Mapping(target = "creator", source = "user")
     AdvertisementResponse advertisementToAdvertisementResponse(Advertisement advertisement);
-
     List<AdvertisementResponse> advertisementsToAdvertisementResponses(List<Advertisement> advertisements);
 }

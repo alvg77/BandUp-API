@@ -18,11 +18,13 @@ public class CommunityPostController {
     private final CommunityPostService communityPostService;
     @GetMapping
     public ResponseEntity<List<CommunityPostResponse>> getAll(
+            @RequestParam(required = false) Integer pageNo,
+            @RequestParam(required = false) Integer pageSize,
             @RequestParam(required = false) String search,
             @RequestParam(required = false) Long flairId,
             @RequestParam(required = false) Long userId
     ) {
-        return ResponseEntity.ok(communityPostService.findAll(search, flairId, userId));
+        return ResponseEntity.ok(communityPostService.findAll(pageNo, pageSize, search, flairId, userId));
     }
 
     @GetMapping("/{id}")
@@ -40,8 +42,20 @@ public class CommunityPostController {
         return ResponseEntity.ok(communityPostService.update(id, request));
     }
 
+    @PutMapping("/{id}/like")
+    public ResponseEntity<String> likePost(@PathVariable Long id) {
+        communityPostService.likePost(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/dislike")
+    public ResponseEntity<String> dislikePost(@PathVariable Long id) {
+        communityPostService.dislikePost(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         communityPostService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

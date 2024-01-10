@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AdvertisementRepository extends JpaRepository<Advertisement, Long>, JpaSpecificationExecutor<Advertisement> {
-}
+public interface AdvertisementRepository extends JpaRepository<Advertisement, Long>,
+                                                 JpaSpecificationExecutor<Advertisement> { }

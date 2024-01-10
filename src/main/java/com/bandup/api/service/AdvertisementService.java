@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface AdvertisementService {
     List<AdvertisementResponse> findAll(
+            Integer pageNo,
+            Integer pageSize,
             String postalCode,
             String city,
             String country,

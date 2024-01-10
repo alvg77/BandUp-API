@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Data
 @Builder
@@ -20,5 +19,9 @@ public class CommunityPostResponse {
     private PostFlairDTO flair;
     private UserDetailResponse creator;
     private Long commentCount;
+    private Long likeCount;
+    private Long dislikeCount;
+    private Boolean liked;
+    private Boolean disliked;
     private Timestamp createdAt;
 }

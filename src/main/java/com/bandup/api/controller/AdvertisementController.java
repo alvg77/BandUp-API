@@ -17,6 +17,8 @@ public class AdvertisementController {
 
     @GetMapping
     public ResponseEntity<List<AdvertisementResponse>> getAll(
+            @RequestParam(required = true) Integer pageNo,
+            @RequestParam(required = true) Integer pageSize,
             @RequestParam(required = false) String postalCode,
             @RequestParam(required = false) String city,
             @RequestParam(required = false) String country,
@@ -24,7 +26,7 @@ public class AdvertisementController {
             @RequestParam(required = false) Long[] genreIds,
             @RequestParam(required = false) Long userId
     ) {
-        return ResponseEntity.ok(advertisementService.findAll(postalCode, city, country, genreIds, artistTypeIds, userId));
+        return ResponseEntity.ok(advertisementService.findAll(pageNo, pageSize, postalCode, city, country, genreIds, artistTypeIds, userId));
     }
 
     @GetMapping("{id}")
@@ -43,7 +45,7 @@ public class AdvertisementController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         advertisementService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

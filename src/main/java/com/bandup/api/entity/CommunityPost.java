@@ -8,7 +8,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -36,6 +38,12 @@ public class CommunityPost {
 
     @OneToMany(mappedBy = "communityPost", cascade = CascadeType.REMOVE)
     private List<Comment> comments = List.of();
+
+    @ManyToMany(mappedBy = "likedPosts")
+    private Set<User> likedByUsers = new HashSet<>();
+
+    @ManyToMany(mappedBy = "dislikedPosts")
+    private Set<User> dislikedByUsers = new HashSet<>();
 
     @ManyToOne(optional = false)
     private User user;

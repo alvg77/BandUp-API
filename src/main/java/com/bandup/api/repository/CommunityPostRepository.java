@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CommunityPostRepository extends JpaRepository<CommunityPost, Long>, JpaSpecificationExecutor<CommunityPost> { }
+public interface CommunityPostRepository extends JpaRepository<CommunityPost, Long>,
+                                                 JpaSpecificationExecutor<CommunityPost> { }

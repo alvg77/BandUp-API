@@ -10,7 +10,6 @@ import org.mapstruct.factory.Mappers;
 public interface ContactsMapper {
     ContactsMapper MAPPER = Mappers.getMapper(ContactsMapper.class);
 
-    @Mapping(target = "id", ignore = true)
     Contacts fromContactsDTO(ContactsDTO contactsDTO);
     ContactsDTO toContactsDTO(Contacts contacts);
 }
