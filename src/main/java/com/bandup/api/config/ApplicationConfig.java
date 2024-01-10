@@ -24,7 +24,7 @@ public class ApplicationConfig {
     public UserDetailsService userDetailsService() {
         return username -> userRepository
                 .findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Username does not exist"));
+                .orElseThrow(() -> new UsernameNotFoundException("Email does not exist!"));
     }
 
     @Bean
