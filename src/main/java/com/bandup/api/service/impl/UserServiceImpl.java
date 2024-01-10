@@ -1,16 +1,12 @@
 package com.bandup.api.service.impl;
 
 import com.bandup.api.dto.user.UserDTO;
-import com.bandup.api.entity.User;
 import com.bandup.api.mapper.UserMapper;
 import com.bandup.api.repository.UserRepository;
 import com.bandup.api.service.AuthService;
 import com.bandup.api.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

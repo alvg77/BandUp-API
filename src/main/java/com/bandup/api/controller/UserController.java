@@ -17,22 +17,22 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable long id) {
+    public ResponseEntity<UserDTO> getById(@PathVariable long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @GetMapping("/me")
-    public ResponseEntity<?> getMe() {
+    public ResponseEntity<UserDTO> getMe() {
         return ResponseEntity.ok(userService.getCurrentUser());
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> update(@RequestBody UserDTO userDTO) {
         return ResponseEntity.ok(userService.updateUser(userDTO));
     }
 
     @DeleteMapping
-    public ResponseEntity<?> delete() {
+    public ResponseEntity<Void> delete() {
         userService.deleteUser();
         return ResponseEntity.noContent().build();
     }

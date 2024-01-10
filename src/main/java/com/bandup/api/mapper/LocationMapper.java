@@ -10,7 +10,6 @@ import org.mapstruct.factory.Mappers;
 public interface LocationMapper {
     LocationMapper MAPPER = Mappers.getMapper(LocationMapper.class);
 
-    @Mapping(target = "id", ignore = true)
-    Location fromRegisterRequestResource(LocationDTO request);
-    LocationDTO toAuthResponseResource(Location user);
+    Location fromLocationDTO(LocationDTO locationDTO);
+    LocationDTO toLocationDTO(Location location);
 }

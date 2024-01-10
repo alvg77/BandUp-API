@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/genres")
@@ -17,7 +18,7 @@ public class GenreController {
     private final GenreService genreService;
 
     @GetMapping
-    public ResponseEntity<List<GenreDTO>> getGenres() {
+    public ResponseEntity<Set<GenreDTO>> getGenres() {
         return ResponseEntity.ok(genreService.getAll());
     }
 }

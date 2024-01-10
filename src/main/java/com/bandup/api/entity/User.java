@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -52,10 +53,6 @@ public class User implements UserDetails {
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createdAt = new Timestamp(System.currentTimeMillis());
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_media_id", referencedColumnName = "id")
-    private List<Media> media;
-
     @OneToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "`user_contacts_id`", referencedColumnName = "`id`")
     private Contacts contacts;
@@ -84,6 +81,22 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
     private Set<Genre> genres = Set.of();
+
+    @ManyToMany
+    @JoinTable(
+            name = "liked_posts",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "post_id")
+    )
+    private Set<CommunityPost> likedPosts = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "disliked_posts",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "post_id")
+    )
+    private Set<CommunityPost> dislikedPosts = new HashSet<>();
 
     // --------------------------------- AUTHENTICATION METHODS ---------------------------------
     @Override

@@ -7,7 +7,9 @@ import com.bandup.api.service.ArtistTypeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -15,9 +17,9 @@ public class ArtistTypeServiceImpl implements ArtistTypeService {
     private final ArtistTypeRepository artistTypeRepository;
 
     @Override
-    public List<ArtistTypeDTO> getAll() {
+    public Set<ArtistTypeDTO> getAll() {
         return ArtistTypeMapper.MAPPER.toArtistTypeDTOs(
-                artistTypeRepository.findAll()
+                new HashSet<>(artistTypeRepository.findAll())
         );
     }
 }

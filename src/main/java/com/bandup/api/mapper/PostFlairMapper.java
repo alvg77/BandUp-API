@@ -11,7 +11,6 @@ import java.util.List;
 public interface PostFlairMapper {
     PostFlairMapper MAPPER = Mappers.getMapper(PostFlairMapper.class);
 
-    PostFlair fromPostFlairDTO(PostFlairDTO postFlairDTO);
     PostFlairDTO toPostFlairDTO(PostFlair postFlair);
     List<PostFlairDTO> toPostFlairDTOs(List<PostFlair> postFlairs);
 }

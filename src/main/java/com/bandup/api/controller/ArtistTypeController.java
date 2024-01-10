@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/artist-types")
@@ -17,7 +18,7 @@ public class ArtistTypeController {
     private final ArtistTypeService artistTypeService;
 
     @GetMapping
-    public ResponseEntity<List<ArtistTypeDTO>> getUserTypes() {
+    public ResponseEntity<Set<ArtistTypeDTO>> getUserTypes() {
         return ResponseEntity.ok(artistTypeService.getAll());
     }
 }

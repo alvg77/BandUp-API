@@ -1,5 +1,6 @@
 package com.bandup.api.dto.auth;
 
+import com.bandup.api.dto.ContactsDTO;
 import com.bandup.api.dto.LocationDTO;
 import lombok.Data;
 import lombok.NonNull;
@@ -21,4 +22,6 @@ public class RegisterRequest {
     private String bio;
     @NonNull
     private LocationDTO location;
+    @NonNull
+    private ContactsDTO contacts;
 }

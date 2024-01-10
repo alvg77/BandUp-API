@@ -49,7 +49,7 @@ public class CommentServiceImpl implements CommentService {
                 () -> new RuntimeException("Comment not found")
         );
 
-        if (comment.getUser().getId() != authService.getCurrentUser().getId()) {
+        if (!comment.getUser().getId().equals(authService.getCurrentUser().getId())) {
             throw new RuntimeException("You are not the owner of this comment");
         }
 

@@ -6,12 +6,12 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
+import java.util.Set;
 
 @Mapper
 public interface GenreMapper {
     GenreMapper MAPPER = Mappers.getMapper(GenreMapper.class);
 
-    Genre fromGenreDTO(GenreDTO genreDTO);
     GenreDTO toGenreDTO(Genre genre);
-    List<GenreDTO> toGenreDTOs(List<Genre> genres);
+    Set<GenreDTO> toGenreDTOs(Set<Genre> genres);
 }

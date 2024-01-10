@@ -3,7 +3,6 @@ package com.bandup.api.service.impl;
 import com.bandup.api.dto.auth.AuthResponse;
 import com.bandup.api.dto.auth.LoginRequest;
 import com.bandup.api.dto.auth.RegisterRequest;
-import com.bandup.api.entity.Genre;
 import com.bandup.api.entity.User;
 import com.bandup.api.mapper.AuthMapper;
 import com.bandup.api.repository.ArtistTypeRepository;
@@ -12,7 +11,6 @@ import com.bandup.api.repository.UserRepository;
 import com.bandup.api.service.AuthService;
 import com.bandup.api.service.JWTService;
 import jakarta.persistence.EntityExistsException;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,10 +21,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.Set;
 
 
 @Service
