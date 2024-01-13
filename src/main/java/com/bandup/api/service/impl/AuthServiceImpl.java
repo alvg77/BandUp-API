@@ -45,7 +45,7 @@ public class AuthServiceImpl implements AuthService {
             );
             user = (User) auth.getPrincipal();
         } catch (AuthenticationException e) {
-            throw new BadCredentialsException("Invalid username or password!");
+            throw new BadCredentialsException("Email and password do not match!");
         }
 
         String jwtToken = jwtService.generateToken(user);
