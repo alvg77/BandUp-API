@@ -5,7 +5,6 @@ import com.bandup.api.entity.Genre;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-import java.util.List;
 import java.util.Set;
 
 @Mapper

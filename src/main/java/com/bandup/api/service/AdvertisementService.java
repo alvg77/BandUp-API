@@ -1,9 +1,7 @@
 package com.bandup.api.service;
 
-import com.bandup.api.dto.LocationDTO;
 import com.bandup.api.dto.advertisement.AdvertisementRequest;
 import com.bandup.api.dto.advertisement.AdvertisementResponse;
-import com.bandup.api.entity.Location;
 
 import java.util.List;
 

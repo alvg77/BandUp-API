@@ -3,7 +3,6 @@ package com.bandup.api.mapper;
 import com.bandup.api.dto.ContactsDTO;
 import com.bandup.api.entity.Contacts;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 @Mapper

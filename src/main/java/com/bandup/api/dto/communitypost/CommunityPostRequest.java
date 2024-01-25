@@ -1,6 +1,5 @@
 package com.bandup.api.dto.communitypost;
 
-import com.bandup.api.dto.PostFlairDTO;
 import jakarta.annotation.Nullable;
 import lombok.Builder;
 import lombok.Data;

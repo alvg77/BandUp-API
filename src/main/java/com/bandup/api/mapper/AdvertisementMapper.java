@@ -3,7 +3,6 @@ package com.bandup.api.mapper;
 import com.bandup.api.dto.advertisement.AdvertisementRequest;
 import com.bandup.api.dto.advertisement.AdvertisementResponse;
 import com.bandup.api.entity.Advertisement;
-import com.bandup.api.repository.UserRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

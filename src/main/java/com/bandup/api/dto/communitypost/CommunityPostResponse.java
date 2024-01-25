@@ -20,8 +20,6 @@ public class CommunityPostResponse {
     private UserDetailResponse creator;
     private Long commentCount;
     private Long likeCount;
-    private Long dislikeCount;
     private Boolean liked;
-    private Boolean disliked;
     private Timestamp createdAt;
 }

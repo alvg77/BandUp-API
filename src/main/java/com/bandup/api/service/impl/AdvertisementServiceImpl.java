@@ -13,6 +13,7 @@ import com.bandup.api.repository.GenreRepository;
 import com.bandup.api.service.AdvertisementService;
 import com.bandup.api.service.AuthService;
 import com.bandup.api.specification.AdvertisementSpecification;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
@@ -49,6 +50,8 @@ public class AdvertisementServiceImpl implements AdvertisementService {
                         artistTypeIds != null ? AdvertisementSpecification.hasArtistTypeIdsIn(artistTypeIds) : null
                 ).and(
                         userId != null ? AdvertisementSpecification.hasUserIdEqual(userId) : null
+                ).and(
+                    AdvertisementSpecification.orderByCreatedAtDesc()
                 );
 
         List<AdvertisementResponse> advertisementResponses = AdvertisementMapper.MAPPER.advertisementsToAdvertisementResponses(
@@ -67,7 +70,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     public AdvertisementResponse findById(Long id) {
         User user = authService.getCurrentUser();
         Advertisement advertisement = advertisementRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Advertisement not found")
+                () -> new EntityNotFoundException("Advertisement not found")
         );
 
         advertisement.setViewCount(advertisement.getViewCount() + 1);
@@ -105,7 +108,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     public AdvertisementResponse update(Long id, AdvertisementRequest request) {
         User user = authService.getCurrentUser();
         Advertisement advertisement = advertisementRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Advertisement not found")
+                () -> new EntityNotFoundException("Advertisement not found")
         );
 
         advertisement.setTitle(request.getTitle());

@@ -3,11 +3,14 @@ package com.bandup.api.service.impl;
 import com.bandup.api.dto.comment.CommentRequest;
 import com.bandup.api.dto.comment.CommentResponse;
 import com.bandup.api.entity.Comment;
+import com.bandup.api.exception.ForbiddenException;
 import com.bandup.api.mapper.CommentMapper;
 import com.bandup.api.repository.CommentRepository;
 import com.bandup.api.service.AuthService;
 import com.bandup.api.service.CommentService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,7 +32,7 @@ public class CommentServiceImpl implements CommentService {
     public CommentResponse getById(Long id) {
         return CommentMapper.MAPPER.toCommentResponseResource(
                 commentRepository.findById(id).orElseThrow(
-                        () -> new RuntimeException("Comment not found")
+                        () -> new EntityNotFoundException("Comment not found")
                 )
         );
     }
@@ -46,11 +49,11 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentResponse update(Long id, CommentRequest request) {
         Comment comment = commentRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Comment not found")
+                () -> new EntityNotFoundException("Comment not found")
         );
 
         if (!comment.getUser().getId().equals(authService.getCurrentUser().getId())) {
-            throw new RuntimeException("You are not the owner of this comment");
+            throw new ForbiddenException("You are not the owner of this comment");
         }
 
         comment.setContent(request.getContent());

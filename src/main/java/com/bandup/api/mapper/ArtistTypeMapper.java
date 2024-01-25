@@ -4,7 +4,6 @@ import com.bandup.api.dto.ArtistTypeDTO;
 import com.bandup.api.entity.ArtistType;
 import org.mapstruct.Mapper;
 
-import java.util.List;
 import java.util.Set;
 
 @Mapper

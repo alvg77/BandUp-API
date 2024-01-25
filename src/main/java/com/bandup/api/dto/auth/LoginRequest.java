@@ -1,6 +1,5 @@
 package com.bandup.api.dto.auth;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
 

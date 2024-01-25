@@ -16,7 +16,5 @@ public interface CommunityPostService {
     CommunityPostResponse findById(Long id);
     CommunityPostResponse create(CommunityPostRequest request);
     CommunityPostResponse update(Long id, CommunityPostRequest request);
-    void likePost(Long id);
-    void dislikePost(Long id);
     void deleteById(Long id);
 }

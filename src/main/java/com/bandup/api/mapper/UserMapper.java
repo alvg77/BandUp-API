@@ -2,7 +2,6 @@ package com.bandup.api.mapper;
 
 import com.bandup.api.dto.user.UserDTO;
 import com.bandup.api.dto.user.UserDetailResponse;
-import com.bandup.api.entity.Contacts;
 import com.bandup.api.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -16,7 +15,8 @@ public interface UserMapper {
 
     @Mapping(target = "id", ignore = true)
     User fromUserDTO(UserDTO userDTO);
-    @Mapping(target = "id", source = "user.id")
+    @Mapping(target = "id", source = "id")
     UserDTO toUserDTO(User user);
+
     UserDetailResponse toUserDetailResponse(User user);
 }

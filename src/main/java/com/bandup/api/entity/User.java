@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Timestamp;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -74,6 +73,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Comment> comments = List.of();
 
+    @OneToMany(mappedBy = "user")
+    private List<Like> likes = List.of();
+
     @ManyToMany
     @JoinTable(
             name = "user_genre",
@@ -81,22 +83,6 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
     private Set<Genre> genres = Set.of();
-
-    @ManyToMany
-    @JoinTable(
-            name = "liked_posts",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "post_id")
-    )
-    private Set<CommunityPost> likedPosts = new HashSet<>();
-
-    @ManyToMany
-    @JoinTable(
-            name = "disliked_posts",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "post_id")
-    )
-    private Set<CommunityPost> dislikedPosts = new HashSet<>();
 
     // --------------------------------- AUTHENTICATION METHODS ---------------------------------
     @Override

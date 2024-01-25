@@ -4,6 +4,7 @@ import com.bandup.api.entity.CommunityPost;
 import com.bandup.api.entity.PostFlair;
 import com.bandup.api.entity.User;
 import jakarta.persistence.criteria.Path;
+import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 
 public class CommunityPostSpecification {
@@ -24,6 +25,12 @@ public class CommunityPostSpecification {
         return (root, query, criteriaBuilder) -> {
             Path<User> user = root.join("user");
             return criteriaBuilder.equal(user.get("id"), userId);
+        };
+    }
+
+    public static Specification<CommunityPost> orderByCreatedAtDesc() {
+        return (root, query, criteriaBuilder) -> {
+            return query.orderBy(criteriaBuilder.desc(root.get("createdAt"))).getRestriction();
         };
     }
 }

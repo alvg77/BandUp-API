@@ -48,4 +48,10 @@ public class AdvertisementSpecification {
             return genres.get("id").in(artistTypeIds);
         };
     }
+
+    public static Specification<Advertisement> orderByCreatedAtDesc() {
+        return (root, query, criteriaBuilder) -> {
+            return query.orderBy(criteriaBuilder.desc(root.get("createdAt"))).getRestriction();
+        };
+    }
 }
