@@ -13,5 +13,4 @@ public class CommentResponse {
     private String content;
     private Date createdAt;
     private UserDetailResponse creator;
-    private Long postId;
 }

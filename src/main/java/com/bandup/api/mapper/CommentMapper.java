@@ -15,7 +15,6 @@ public interface CommentMapper {
 
     @Mapping(target = "communityPost.id", source = "postId")
     Comment fromCommentRequestResource(CommentRequest request);
-    @Mapping(target = "postId", source = "communityPost.id")
     @Mapping(target = "creator", source = "user")
     CommentResponse toCommentResponseResource(Comment comment);
     List<CommentResponse> toCommentResponses(List<Comment> commentList);

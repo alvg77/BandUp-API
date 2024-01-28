@@ -17,9 +17,11 @@ public class CommentController {
 
     @GetMapping
     public ResponseEntity<List<CommentResponse>> getAll(
-            @RequestParam(value = "postId", required = true) Long postId
+            @RequestParam(value = "postId", required = true) Long postId,
+            @RequestParam(value = "pageNo", required = true) Long pageNo,
+            @RequestParam(value = "pageSize", required = true) Long pageSize
     ) {
-        return ResponseEntity.ok(commentService.getAll());
+        return ResponseEntity.ok(commentService.getAll(postId, pageNo, pageSize));
     }
 
     @GetMapping("/{id}")
@@ -28,7 +30,9 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResponseEntity<CommentResponse> create(@RequestBody CommentRequest request) {
+    public ResponseEntity<CommentResponse> create(
+            @RequestBody CommentRequest request
+    ) {
         return ResponseEntity.ok(commentService.create(request));
     }
 

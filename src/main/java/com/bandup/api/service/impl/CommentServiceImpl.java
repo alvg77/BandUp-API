@@ -10,6 +10,8 @@ import com.bandup.api.service.AuthService;
 import com.bandup.api.service.CommentService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +24,10 @@ public class CommentServiceImpl implements CommentService {
     private final AuthService authService;
 
     @Override
-    public List<CommentResponse> getAll() {
+    public List<CommentResponse> getAll(Long postId, Long pageNo, Long pageSize) {
+        Pageable pageable = PageRequest.of(pageNo.intValue(), pageSize.intValue());
         return CommentMapper.MAPPER.toCommentResponses(
-                commentRepository.findAll()
+                commentRepository.findAllByCommunityPostIdOrderByCreatedAtDesc(postId, pageable)
         );
     }
 
