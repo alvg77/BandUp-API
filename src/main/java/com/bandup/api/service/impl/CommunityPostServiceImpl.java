@@ -13,11 +13,9 @@ import com.bandup.api.service.AuthService;
 import com.bandup.api.service.CommunityPostService;
 import com.bandup.api.specification.CommunityPostSpecification;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -56,9 +54,7 @@ public class CommunityPostServiceImpl implements CommunityPostService {
         List<CommunityPost> posts = communityPostRepository.findAll(spec, pageRequest).getContent();
         List<CommunityPostResponse> responses = CommunityPostMapper.MAPPER.toCommunityPostResponses(posts);
 
-        responses.forEach(response -> {
-            response.setLiked(likeRepository.findByUserIdAndPostId(user.getId(), response.getId()).isPresent());
-        });
+        responses.forEach(response -> response.setLiked(likeRepository.findByUserIdAndPostId(user.getId(), response.getId()).isPresent()));
 
         return responses;
     }
