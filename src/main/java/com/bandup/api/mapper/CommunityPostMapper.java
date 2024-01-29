@@ -16,7 +16,6 @@ public interface CommunityPostMapper {
     CommunityPost fromCommunityPostRequest(CommunityPostRequest request);
 
     @Mapping(target = "likeCount", expression = "java((long) communityPost.getLikes().size())")
-    @Mapping(target = "liked", expression = "java(communityPost.getLikes().stream().anyMatch(like -> like.getUser().getId().equals(communityPost.getUser().getId())))")
     @Mapping(target = "commentCount", expression = "java((long) communityPost.getComments().size())")
     @Mapping(target = "creator", source = "user")
     CommunityPostResponse toCommunityPostResponse(CommunityPost communityPost);

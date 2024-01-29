@@ -53,7 +53,12 @@ public class CommunityPostServiceImpl implements CommunityPostService {
 
         PageRequest pageRequest = PageRequest.of(pageNo, pageSize);
 
-        List<CommunityPostResponse> responses = CommunityPostMapper.MAPPER.toCommunityPostResponses(communityPostRepository.findAll(spec, pageRequest).getContent());
+        List<CommunityPost> posts = communityPostRepository.findAll(spec, pageRequest).getContent();
+        List<CommunityPostResponse> responses = CommunityPostMapper.MAPPER.toCommunityPostResponses(posts);
+
+        responses.forEach(response -> {
+            response.setLiked(likeRepository.findByUserIdAndPostId(user.getId(), response.getId()).isPresent());
+        });
 
         return responses;
     }
@@ -65,6 +70,8 @@ public class CommunityPostServiceImpl implements CommunityPostService {
             () -> new EntityNotFoundException("Community post not found")
         );
         CommunityPostResponse response = CommunityPostMapper.MAPPER.toCommunityPostResponse(post);
+        response.setLiked(likeRepository.findByUserIdAndPostId(user.getId(), response.getId()).isPresent());
+
         return response;
     }
 
