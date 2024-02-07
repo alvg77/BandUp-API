@@ -33,7 +33,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     public List<AdvertisementResponse> findAll(
             Integer pageNo,
             Integer pageSize,
-            String postalCode,
+            String administrativeArea,
             String city,
             String country,
             Long[] genreIds,
@@ -41,9 +41,15 @@ public class AdvertisementServiceImpl implements AdvertisementService {
             Long userId
     ) {
         User user = authService.getCurrentUser();
-
-        Specification spec = Specification.where(
-                        postalCode != null && city != null && country != null ? AdvertisementSpecification.hasPostalCodeEqual(postalCode, city, country) : null
+        System.out.println(administrativeArea);
+        System.out.println(city);
+        System.out.println(country);
+        Specification<Advertisement> spec = Specification.where(
+                        administrativeArea != null && !administrativeArea.isEmpty() ? AdvertisementSpecification.hasAdministrativeAreaEqual(administrativeArea) : null
+                ).and (
+                        city != null && !city.isEmpty() ? AdvertisementSpecification.hasCityEqual(city) : null
+                ).and(
+                        country != null && !country.isEmpty() ? AdvertisementSpecification.hasCountryEqual(country) : null
                 ).and(
                         genreIds != null ? AdvertisementSpecification.hasGenreIdsIn(genreIds) : null
                 ).and(
@@ -55,7 +61,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
                 );
 
         List<AdvertisementResponse> advertisementResponses = AdvertisementMapper.MAPPER.advertisementsToAdvertisementResponses(
-                advertisementRepository.findAll(spec, PageRequest.of(0, 10)).getContent()
+                advertisementRepository.findAll(spec, PageRequest.of(pageNo, pageSize)).getContent()
         );
 
         advertisementResponses.forEach(advertisementResponse -> {

@@ -1,10 +1,11 @@
 package com.bandup.api.service;
 
-import com.bandup.api.dto.user.UserDTO;
+import com.bandup.api.dto.user.UserRequest;
+import com.bandup.api.dto.user.UserResponse;
 
 public interface UserService {
-    public UserDTO getUserById(Long id);
-    public UserDTO getCurrentUser();
-    public UserDTO updateUser(UserDTO user);
+    public UserResponse getUserById(Long id);
+    public UserResponse getCurrentUser();
+    public UserResponse updateUser(UserRequest user);
     public void deleteUser();
 }

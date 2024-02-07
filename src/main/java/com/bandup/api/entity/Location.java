@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Entity
 @Data
@@ -16,6 +17,7 @@ public class Location {
     private Long id;
     private String country;
     private String city;
-    private String postalCode;
+    private String administrativeArea;
+    private Double lat;
+    private Double lon;
 }
-

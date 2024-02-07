@@ -12,20 +12,28 @@ import org.springframework.data.jpa.domain.Specification;
 public class AdvertisementSpecification {
     private AdvertisementSpecification() {}
 
-    public static Specification<Advertisement> hasPostalCodeEqual(String postalCode, String city, String country) {
+    public static Specification<Advertisement> hasCityEqual(String city) {
         return (root, query, criteriaBuilder) -> {
-            Path<Location> location = root.get("location");
-
-            Predicate postalCodePredicate = criteriaBuilder.equal(location.get("postalCode"), postalCode);
-            Predicate cityPredicate = criteriaBuilder.equal(location.get("city"), city);
-            Predicate countryPredicate = criteriaBuilder.equal(location.get("country"), country);
-
-            return criteriaBuilder.and(postalCodePredicate, cityPredicate, countryPredicate);
+            Path<User> user = root.get("user");
+            Path<Location> location = user.get("location");
+            return criteriaBuilder.equal(location.get("city"), city);
         };
     }
 
     public static Specification<Advertisement> hasCountryEqual(String country) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("country"), country);
+        return (root, query, criteriaBuilder) -> {
+            Path<User> user = root.get("user");
+            Path<Location> location = user.get("location");
+            return criteriaBuilder.equal(location.get("country"), country);
+        };
+    }
+
+    public static Specification<Advertisement> hasAdministrativeAreaEqual(String administrativeArea) {
+        return (root, query, criteriaBuilder) -> {
+            Path<User> user = root.get("user");
+            Path<Location> location = user.get("location");
+            return criteriaBuilder.equal(location.get("administrativeArea"), administrativeArea);
+        };
     }
 
     public static Specification<Advertisement> hasUserIdEqual(Long userId) {
@@ -44,7 +52,7 @@ public class AdvertisementSpecification {
 
     public static Specification<Advertisement> hasArtistTypeIdsIn(Long[] artistTypeIds) {
         return (root, query, criteriaBuilder) -> {
-            Join<Advertisement, Genre> genres = root.join("searched");
+            Join<Advertisement, Genre> genres = root.join("searchedArtistTypes");
             return genres.get("id").in(artistTypeIds);
         };
     }

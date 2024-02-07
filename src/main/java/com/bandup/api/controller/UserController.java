@@ -1,6 +1,7 @@
 package com.bandup.api.controller;
 
-import com.bandup.api.dto.user.UserDTO;
+import com.bandup.api.dto.user.UserRequest;
+import com.bandup.api.dto.user.UserResponse;
 import com.bandup.api.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,18 +14,18 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getById(@PathVariable long id) {
+    public ResponseEntity<UserResponse> getById(@PathVariable long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @GetMapping("/me")
-    public ResponseEntity<UserDTO> getMe() {
+    public ResponseEntity<UserResponse> getMe() {
         return ResponseEntity.ok(userService.getCurrentUser());
     }
 
     @PutMapping
-    public ResponseEntity<UserDTO> update(@RequestBody UserDTO userDTO) {
-        return ResponseEntity.ok(userService.updateUser(userDTO));
+    public ResponseEntity<UserResponse> update(@RequestBody UserRequest userRequest) {
+        return ResponseEntity.ok(userService.updateUser(userRequest));
     }
 
     @DeleteMapping

@@ -11,6 +11,7 @@ import com.bandup.api.repository.UserRepository;
 import com.bandup.api.service.AuthService;
 import com.bandup.api.service.JWTService;
 import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -61,7 +62,7 @@ public class AuthServiceImpl implements AuthService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setArtistType(
                 artistTypeRepository.findById(registerRequest.getArtistTypeId())
-                .orElseThrow(() -> new EntityExistsException("Artist type with such id does not exist!"))
+                .orElseThrow(() -> new EntityNotFoundException("Artist type with such id does not exist!"))
         );
         user.setGenres(genreRepository.getGenresByIdIsIn(registerRequest.getGenreIds()));
 
