@@ -10,6 +10,7 @@ import com.bandup.api.mapper.LocationMapper;
 import com.bandup.api.repository.AdvertisementRepository;
 import com.bandup.api.repository.ArtistTypeRepository;
 import com.bandup.api.repository.GenreRepository;
+import com.bandup.api.repository.UserRepository;
 import com.bandup.api.service.AdvertisementService;
 import com.bandup.api.service.AuthService;
 import com.bandup.api.specification.AdvertisementSpecification;
@@ -28,6 +29,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     private final AdvertisementRepository advertisementRepository;
     private final GenreRepository genreRepository;
     private final ArtistTypeRepository artistTypeRepository;
+    private final UserRepository userRepository;
 
     @Override
     public List<AdvertisementResponse> findAll(
@@ -65,8 +67,11 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         );
 
         advertisementResponses.forEach(advertisementResponse -> {
-            advertisementResponse.setLocation(LocationMapper.MAPPER.toLocationDTO(user.getLocation()));
-            advertisementResponse.setContacts(ContactsMapper.MAPPER.toContactsDTO(user.getContacts()));
+            User advertisementUser = userRepository.findById(advertisementResponse.getCreator().getId()).orElseThrow(
+                    () -> new EntityNotFoundException("User not found")
+            );
+            advertisementResponse.setLocation(LocationMapper.MAPPER.toLocationDTO(advertisementUser.getLocation()));
+            advertisementResponse.setContacts(ContactsMapper.MAPPER.toContactsDTO(advertisementUser.getContacts()));
         });
 
         return advertisementResponses;

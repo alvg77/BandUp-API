@@ -3,6 +3,7 @@ package com.bandup.api.service.impl;
 import com.bandup.api.dto.user.UserRequest;
 import com.bandup.api.dto.user.UserResponse;
 import com.bandup.api.entity.User;
+import com.bandup.api.mapper.ContactsMapper;
 import com.bandup.api.mapper.LocationMapper;
 import com.bandup.api.mapper.UserMapper;
 import com.bandup.api.repository.ArtistTypeRepository;
@@ -25,27 +26,31 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse getUserById(Long id) {
-        return UserMapper.MAPPER.toUserDTO(userRepository.findById(id).orElseThrow());
+        return UserMapper.MAPPER.toUserDTO(userRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("User does not exist!")
+        ));
     }
 
     @Override
     public UserResponse getCurrentUser() {
-        return UserMapper.MAPPER.toUserDTO(userRepository.findById(authService.getCurrentUser().getId()).orElseThrow());
+        System.out.println("Current user id: " + authService.getCurrentUser().getId());
+        return UserMapper.MAPPER.toUserDTO(userRepository.findById(authService.getCurrentUser().getId()).orElseThrow(
+                () -> new EntityNotFoundException("User does not exist!")
+        ));
     }
 
     @Override
     public UserResponse updateUser(UserRequest userRequest) {
         User user = authService.getCurrentUser();
         user.setUsername(userRequest.getUsername());
-        user.setProfilePicture(userRequest.getProfilePicture());
+        user.setProfilePictureKey(userRequest.getProfilePictureKey());
         user.setBio(userRequest.getBio());
-        user.setLocation(LocationMapper.MAPPER.fromLocationDTO(userRequest.getLocation()));
         user.setArtistType(
                 artistTypeRepository.findById(userRequest.getArtistTypeId())
                         .orElseThrow(() -> new EntityNotFoundException("Artist type with such id does not exist!"))
         );
         user.setGenres(genreRepository.getGenresByIdIsIn(userRequest.getGenreIds()));
-
+        user.setContacts(ContactsMapper.MAPPER.fromContactsDTO(userRequest.getContacts()));
         return UserMapper.MAPPER.toUserDTO(userRepository.save(user));
     }
 

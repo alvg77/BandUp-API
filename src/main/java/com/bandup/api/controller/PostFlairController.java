@@ -18,6 +18,7 @@ public class PostFlairController {
 
     @GetMapping
     public ResponseEntity<List<PostFlairDTO>> getPostFlairs() {
+        System.out.println("Getting all post flairs");
         return ResponseEntity.ok(postFlairService.getAll());
     }
 }

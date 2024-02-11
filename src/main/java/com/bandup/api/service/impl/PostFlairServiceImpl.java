@@ -16,6 +16,7 @@ public class PostFlairServiceImpl implements PostFlairService {
 
     @Override
     public List<PostFlairDTO> getAll() {
+        postFlairRepository.findAll().forEach(System.out::println);
         return PostFlairMapper.MAPPER.toPostFlairDTOs(
                 postFlairRepository.findAll()
         );

@@ -44,10 +44,7 @@ public class User implements UserDetails {
     private String bio;
 
     @Nullable
-    private String profilePicture;
-
-    @Nullable
-    private String profileBanner;
+    private String profilePictureKey;
 
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createdAt = new Timestamp(System.currentTimeMillis());
@@ -64,16 +61,16 @@ public class User implements UserDetails {
     @JoinColumn(name = "`artist_type_id`", referencedColumnName = "`id`")
     private ArtistType artistType;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<CommunityPost> communityPosts = List.of();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Advertisement> advertisements = List.of();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Comment> comments = List.of();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.DETACH)
     private List<Like> likes = List.of();
 
     @ManyToMany
