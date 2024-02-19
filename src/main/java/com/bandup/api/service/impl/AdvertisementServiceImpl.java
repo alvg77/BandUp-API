@@ -84,7 +84,6 @@ public class AdvertisementServiceImpl implements AdvertisementService {
                 () -> new EntityNotFoundException("Advertisement not found")
         );
 
-        advertisement.setViewCount(advertisement.getViewCount() + 1);
         AdvertisementResponse response = AdvertisementMapper.MAPPER.advertisementToAdvertisementResponse(
                 advertisementRepository.save(advertisement)
         );
@@ -100,7 +99,6 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         User user = authService.getCurrentUser();
         Advertisement advertisement = AdvertisementMapper.MAPPER.advertisementRequestToAdvertisement(request);
 
-        advertisement.setViewCount(0L);
         advertisement.setGenres(genreRepository.getGenresByIdIsIn(request.getGenreIds()));
         advertisement.setSearchedArtistTypes(artistTypeRepository.getArtistTypesByIdIsIn(request.getSearchedArtistTypeIds()));
         advertisement.setUser(user);

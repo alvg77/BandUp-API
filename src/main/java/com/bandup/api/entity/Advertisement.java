@@ -22,8 +22,6 @@ public class  Advertisement {
 
     private String description;
 
-    private Long viewCount;
-
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createdAt = new Timestamp(System.currentTimeMillis());
 

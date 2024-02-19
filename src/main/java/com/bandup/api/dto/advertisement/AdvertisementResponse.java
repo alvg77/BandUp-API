@@ -17,7 +17,6 @@ public class AdvertisementResponse {
     private Long id;
     private String title;
     private String description;
-    private Long viewCount;
     private LocationDTO location;
     private Set<GenreDTO> genres;
     private Set<ArtistTypeDTO> searchedArtistTypes;
