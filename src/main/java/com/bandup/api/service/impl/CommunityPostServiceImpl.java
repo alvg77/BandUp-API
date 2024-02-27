@@ -33,8 +33,7 @@ public class CommunityPostServiceImpl implements CommunityPostService {
             Integer pageNo,
             Integer pageSize,
             String search,
-            Long flairId,
-            Long userId
+            Long flairId
     ) {
         User user = authService.getCurrentUser();
 
@@ -43,8 +42,6 @@ public class CommunityPostServiceImpl implements CommunityPostService {
                         search != null ? CommunityPostSpecification.search(search) : null
                 ).and(
                         flairId != null ? CommunityPostSpecification.hasFlairIdEqual(flairId) : null
-                ).and(
-                        userId != null ? CommunityPostSpecification.hasUserIdEqual(userId) : null
                 ).and(
                         CommunityPostSpecification.orderByCreatedAtDesc()
                 );

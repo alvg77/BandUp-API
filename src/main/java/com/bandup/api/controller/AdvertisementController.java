@@ -23,10 +23,9 @@ public class AdvertisementController {
             @RequestParam(required = false) String city,
             @RequestParam(required = false) String country,
             @RequestParam(required = false) Long[] artistTypeIds,
-            @RequestParam(required = false) Long[] genreIds,
-            @RequestParam(required = false) Long userId
+            @RequestParam(required = false) Long[] genreIds
     ) {
-        return ResponseEntity.ok(advertisementService.findAll(pageNo, pageSize, postalCode, city, country, genreIds, artistTypeIds, userId));
+        return ResponseEntity.ok(advertisementService.findAll(pageNo, pageSize, postalCode, city, country, genreIds, artistTypeIds));
     }
 
     @GetMapping("{id}")

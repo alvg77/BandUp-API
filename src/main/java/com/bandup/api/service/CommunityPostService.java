@@ -10,8 +10,7 @@ public interface CommunityPostService {
             Integer pageNo,
             Integer pageSize,
             String search,
-            Long flairId,
-            Long userId
+            Long flairId
     );
     CommunityPostResponse findById(Long id);
     CommunityPostResponse create(CommunityPostRequest request);
