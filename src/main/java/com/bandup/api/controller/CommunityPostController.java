@@ -20,10 +20,9 @@ public class CommunityPostController {
             @RequestParam(required = false) Integer pageNo,
             @RequestParam(required = false) Integer pageSize,
             @RequestParam(required = false) String search,
-            @RequestParam(required = false) Long flairId,
-            @RequestParam(required = false) Long userId
+            @RequestParam(required = false) Long flairId
     ) {
-        return ResponseEntity.ok(communityPostService.findAll(pageNo, pageSize, search, flairId, userId));
+        return ResponseEntity.ok(communityPostService.findAll(pageNo, pageSize, search, flairId));
     }
 
     @GetMapping("/{id}")

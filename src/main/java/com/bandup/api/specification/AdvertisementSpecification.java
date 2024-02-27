@@ -6,7 +6,6 @@ import com.bandup.api.entity.Location;
 import com.bandup.api.entity.User;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Path;
-import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 
 public class AdvertisementSpecification {
@@ -36,13 +35,6 @@ public class AdvertisementSpecification {
         };
     }
 
-    public static Specification<Advertisement> hasUserIdEqual(Long userId) {
-        return (root, query, criteriaBuilder) -> {
-            Path<User> user = root.join("user");
-            return criteriaBuilder.equal(user.get("id"), userId);
-        };
-    }
-
     public static Specification<Advertisement> hasGenreIdsIn(Long[] genreIds) {
         return (root, query, criteriaBuilder) -> {
             Join<Advertisement, Genre> genres = root.join("genres");
@@ -58,8 +50,6 @@ public class AdvertisementSpecification {
     }
 
     public static Specification<Advertisement> orderByCreatedAtDesc() {
-        return (root, query, criteriaBuilder) -> {
-            return query.orderBy(criteriaBuilder.desc(root.get("createdAt"))).getRestriction();
-        };
+        return (root, query, criteriaBuilder) -> query.orderBy(criteriaBuilder.desc(root.get("createdAt"))).getRestriction();
     }
 }

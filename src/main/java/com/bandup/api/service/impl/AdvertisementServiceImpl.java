@@ -39,13 +39,9 @@ public class AdvertisementServiceImpl implements AdvertisementService {
             String city,
             String country,
             Long[] genreIds,
-            Long[] artistTypeIds,
-            Long userId
+            Long[] artistTypeIds
     ) {
         User user = authService.getCurrentUser();
-        System.out.println(administrativeArea);
-        System.out.println(city);
-        System.out.println(country);
         Specification<Advertisement> spec = Specification.where(
                         administrativeArea != null && !administrativeArea.isEmpty() ? AdvertisementSpecification.hasAdministrativeAreaEqual(administrativeArea) : null
                 ).and (
@@ -56,8 +52,6 @@ public class AdvertisementServiceImpl implements AdvertisementService {
                         genreIds != null ? AdvertisementSpecification.hasGenreIdsIn(genreIds) : null
                 ).and(
                         artistTypeIds != null ? AdvertisementSpecification.hasArtistTypeIdsIn(artistTypeIds) : null
-                ).and(
-                        userId != null ? AdvertisementSpecification.hasUserIdEqual(userId) : null
                 ).and(
                     AdvertisementSpecification.orderByCreatedAtDesc()
                 );

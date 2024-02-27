@@ -13,8 +13,7 @@ public interface AdvertisementService {
             String city,
             String country,
             Long[] genreIds,
-            Long[] artistTypeIds,
-            Long userId
+            Long[] artistTypeIds
     );
     AdvertisementResponse findById(Long id);
     AdvertisementResponse create(AdvertisementRequest request);
