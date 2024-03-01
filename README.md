@@ -17,5 +17,5 @@ aws_secret_access_key=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 aws_session_token=IQoJb3JpZ2luX2IQoJb3JpZ2luX2IQoJb3JpZ2luX2IQoJb3JpZ2luX2IQoJb3JpZVERYLONGSTRINGEXAMPLE
 ```
 - Start the app with:
- - [On Windows] `./mvnw.bat spring-boot:run`
+ - [On Windows] `./mvnw.cmd spring-boot:run`
  - [On Linux/macOS] `./mvnw spring-boot:run`
