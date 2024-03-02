@@ -9,7 +9,7 @@ POSTGRES_USER=example
 POSTGRES_PASSWORD=example
 JWT_SECRET=example
 ```
-- For the AWS integration with S3, you have to provide file with credentials, located in `~/.aws/`, otherwise the application won't run. More information about configuring AWS credentials locally can be found <a href="https://docs.aws.amazon.com/sdkref/latest/guide/file-format.html">here</a>. In general the credentials file should look like this:
+- For the AWS integration with S3, you have to set up a bucket with are `EU_CENTRAL_1` and provide file with credentials, located in `~/.aws/`, otherwise the application won't run. More information about configuring AWS credentials locally can be found <a href="https://docs.aws.amazon.com/sdkref/latest/guide/file-format.html">here</a>. In general the credentials file should look like this:
 ```
 [default]
 aws_access_key_id=AKIAIOSFODNN7EXAMPLE
