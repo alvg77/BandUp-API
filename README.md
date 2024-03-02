@@ -16,6 +16,7 @@ aws_access_key_id=AKIAIOSFODNN7EXAMPLE
 aws_secret_access_key=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 aws_session_token=IQoJb3JpZ2luX2IQoJb3JpZ2luX2IQoJb3JpZ2luX2IQoJb3JpZ2luX2IQoJb3JpZVERYLONGSTRINGEXAMPLE
 ```
+!NOTE! if you want to change the bucket region, you have to do it inside the `AWSConfig` class, in the `s3Presigner` bean.
 - Start the app with:
  - [On Windows] `./mvnw.cmd spring-boot:run`
  - [On Linux/macOS] `./mvnw spring-boot:run`
