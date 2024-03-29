@@ -12,7 +12,7 @@ import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 public class AWSConfig {
     private final AwsCredentialsProvider provider;
 
-    AWSConfig(@Value("s3.access-key-id") String accessKeyId, @Value("s3.secret-access-key") String secretAccessKey) {
+    AWSConfig(@Value("${s3.access-key-id}") String accessKeyId, @Value("${s3.secret-access-key}") String secretAccessKey) {
         AwsCredentials credentials = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
         provider = StaticCredentialsProvider.create(credentials);
     }
